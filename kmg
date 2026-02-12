@@ -1,0 +1,38 @@
+$ cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python kmg_talker
+colcon build --select-packages kmg_talker --symlink-install 
+
+
+
+pixcel to pixcel need 
+
+rgb and stereo(depth) need to same pix(focal length)
+
+
+amr
+webcam
+yaml edit
+ros2 topic -bw [topic_name] # m/s
+ros2 topic -hz [topic_name] # hz
+
+yolo train
+maek influence
+
+
+depth topic name - /robot3/
+dep 
+
+https://indecisive-freedom-6e8.notion.site/Doosan-Rokey-6-29d8e215779c8060974ae4a5311b1942
+
+---
+2월20일날 기능 
+
+# 현실 로봇 연결 코드 - 랜선 연결 필요
+ros2 launch  dsr_bringup2 dsr_bringup2_rviz.launch.py mode:=real host:=192.168.1.100 port:=12345 model:=m0609
+
+# 가상 로봇 연결 코드
+ros2 launch  dsr_bringup2 dsr_bringup2_rviz.launch.py mode:=virtual host:=127.0.0.1 port:=12345 model:=m0609
+
+웹에서 시작 하면 
+화면에서 타일을 집었어 타일을 놨어 등등 확 
+

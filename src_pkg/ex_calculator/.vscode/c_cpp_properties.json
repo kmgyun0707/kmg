@@ -1,0 +1,58 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/i/ros2_ws/install/ros_study_msgs/include/**",
+        "/home/i/ros2_ws/install/nav2_msgs/include/**",
+        "/home/i/ros2_ws/install/my_robot_interfaces/include/**",
+        "/home/i/ros2_ws/install/hangman_interfaces/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/i/ros2_ws/src/BehaviorTree.CPP/include/**",
+        "/home/i/ros2_ws/src/my_robot_interfaces/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_amcl/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_behavior_tree/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_behaviors/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_bt_navigator/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_collision_monitor/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_constrained_smoother/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_controller/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_core/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_costmap_2d/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_dwb_controller/costmap_queue/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_dwb_controller/dwb_core/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_dwb_controller/dwb_critics/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_dwb_controller/dwb_plugins/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_dwb_controller/nav_2d_utils/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_graceful_controller/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_lifecycle_manager/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_map_server/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_mppi_controller/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_navfn_planner/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_planner/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_regulated_pure_pursuit_controller/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_rotation_shim_controller/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_rviz_plugins/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_smac_planner/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_smoother/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_theta_star_planner/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_util/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_velocity_smoother/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_voxel_grid/include/**",
+        "/home/i/ros2_ws/src/navigation2/nav2_waypoint_follower/include/**",
+        "/home/i/ros2_ws/src/practice_my_package_lec2/include/**",
+        "/home/i/ros2_ws/src/ros_study_msgs/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
