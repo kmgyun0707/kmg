@@ -1,6 +1,6 @@
 $ cd ~/ros2_ws/src
 ros2 pkg create --build-type ament_python kmg_talker
-colcon build --select-packages kmg_talker --symlink-install 
+
 
 
 
@@ -30,9 +30,243 @@ https://indecisive-freedom-6e8.notion.site/Doosan-Rokey-6-29d8e215779c8060974ae4
 # 현실 로봇 연결 코드 - 랜선 연결 필요
 ros2 launch  dsr_bringup2 dsr_bringup2_rviz.launch.py mode:=real host:=192.168.1.100 port:=12345 model:=m0609
 
-# 가상 로봇 연결 코드
+# 가상 로봇 연결 코드 협동1
 ros2 launch  dsr_bringup2 dsr_bringup2_rviz.launch.py mode:=virtual host:=127.0.0.1 port:=12345 model:=m0609
+# 가상 로봇 연결 코드 협동2
+ros2 launch dsr_bringup2 dsr_bringup2_rviz.launch.py mode:=real host:=192.168.1.100 port:=12345 model:=m0609
 
-웹에서 시작 하면 
-화면에서 타일을 집었어 타일을 놨어 등등 확 
+# 타일 노드 실행 토픽
+ros2 topic pub --once /tile/run_once std_msgs/msg/Int32 "{data: 1}"
+# 타일 노드 정지 토픽
+ros2 topic pub --once /task/pause std_msgs/msg/Bool "{data: true}"
+# 타일 노드 작업 취소 토픽
+ros2 topic pub --once /task/stop_soft std_msgs/msg/Bool "{data: true}"
+
+# 패턴 발행 토픽 
+ros2 topic pub /robot/design_ab std_msgs/msg/String "{data: 'B,A,B,A,B,A,B,A,B'}" -1
+
+# 그리퍼 드라이버
+ros2 launch onrobot_driver onrobot_control.launch.py onrobot_type:=rg2 connection_type:=tcp ip_address:=192.168.1.1 port:=502 launch_rviz:=false
+
+# 그리퍼 노드
+ros2 run tilemate_main _node 
+
+ros2 run tilemate_main tile_motion_node 
+
+힘 12n 일때 
+파지 불량 4개 
+공중에서 외력 걸린 타일 1개 
+
+힘 14n 일때 
+파지 불량 -> 공중에서 하나 떨어트림 (6번,7번 )
+공중에서 외력 걸린 타일 1개 
+가이드에 걸린타일
+검은타일은 힘을 적게 받음 
+밑에 가서 힘을 적게 줌.. 왜?
+
+힘 17n 일때 
+공중에서 떨어짐 4번 
+
+0 0 90 0 90 0
+
+
+
+
+colcon build --symlink-install --packages-select tilemate_main
+
+git hub 코드 수정사항
+colcon build 에러
+문제점 setup()함수 실행중 에러
+setup.py안에서 entry_points 내부에 라인마다 , 가 들어가야하는데 누락된 부분
+move_basic과 move_periodic이 중복 선언되어있던 부분
+
+git-hub에서 파일을 받아서 colcon build하면 생기는 colcon.env파일이 changes에 잡히는 문제
+최상위 폴더에서 .gitignor안에 
+# VS Code[ 환경 파일 무시
+.vscode/colcon.env
+ 이걸 입력하면 끝
+ .gitignor을 통해 커밋하지말아야하는파일 등을 관리하도록 추가 
+ 
+ tcp셋업은 자동모드에선 안바뀜 무조건 수동모드에서 바껴야함
+
+[타일이 때지는 임계점]
+260을 줬을때 기준 , tcp좌표계 기준 22도 회전 + 회전 시간도 0.5초여야 딱 떼짐 
+-> 오차 4mm 
+265, 22도 회전 0.7초 -> 안떼짐
+265,22도 회전, 0.5초 -> 뗴짐 
+결론 22도 최소
+
+
+
+[타일 제대로 파지 되지 않는 문제점]
+슬로우 모션을 찍어서 확실하게 이게 힘을 눌리는게 부족한지 접촉 면적 문제가 있는지 등을 확인 
+(사람 손으로 눌렀을때와 로봇 손이 눌렀을때 차이점)
+변수 
+압착 도구의 내구성
+맵자체의 변형 
+타일을 잡는 위치 
+타일을 누르는 힘 
+타일 표면의 상태 
+
+
+
+def compliant_approach(threshold_n=5.0, timeout_s=10.0):
+            from DSR_ROBOT2 import (
+                set_ref_coord, task_compliance_ctrl, release_compliance_ctrl,
+                amovel, stop, STOP_TYPE_QUICK, check_motion, check_force_condition,
+                get_current_posx, DR_BASE, DR_TOOL, DR_AXIS_Z, wait
+            )
+
+            self.get_logger().info(f"[APPROACH] 스르륵 하강 탐색 시작 (감지 기준: {threshold_n}N)")
+
+            # 1. 닿을 때 충격을 스프링처럼 흡수하도록 Z축만 부드럽게(80) 켭니다.
+            set_ref_coord(DR_TOOL)
+            task_compliance_ctrl(stx=[3000, 3000, 80, 200, 200, 200])
+            wait(0.2) 
+
+            # 2. 하강할 목표 위치 생성 (현재 위치에서 Z축 방향으로 80mm 아래로 스르륵 내려감)
+            cur, _ = get_current_posx(DR_BASE)
+            # 타일이 바닥에 있으므로 Base 좌표계 기준 Z를 빼서 아래로 이동하게 만듭니다.
+            target_pos = [cur[0], cur[1], 120 , cur[3], cur[4], cur[5]]
+
+            # 3. 비동기 하강 (가장 중요 ⭐)
+            # set_desired_force 대신, amovel을 써서 일정한 속도(vel=15)로 아주 우아하게 내려갑니다.
+            amovel(target_pos, vel=15, acc=15, ref=DR_BASE)
+            wait(0.1) # 모션이 확실히 시작되도록 아주 잠깐 대기
+
+            is_contact = False
+            
+            # 4. 내려가는 동안 계속 힘을 감지
+            while check_motion() != 0:
+                # 툴 끝에 설정한 threshold_n 이상의 힘이 걸리는지 확인
+                ret = check_force_condition(DR_AXIS_Z, min=0, max=float(threshold_n))
+                
+                if ret == -1:
+                    self.get_logger().info(f"✅ [APPROACH] 접촉 감지! ({threshold_n}N) 하강 정지.")
+                    stop(STOP_TYPE_QUICK) # 닿자마자 즉시 정지!
+                    is_contact = True
+                    break
+                
+                # 강제 정지 예외 처리
+                if self._stop_soft:
+                    stop(STOP_TYPE_QUICK)
+                    break
+                
+                wait(0.01)
+
+            # 5. 진공 흡착이 완료될 시간 벌기
+            if is_contact:
+                # 로봇이 멈춘 상태(살짝 눌린 상태)에서 고무판 안의 공기가 빠질 수 있도록 0.5초 대기합니다.
+                wait(0.5) 
+
+            # 6. 제어 권한 원상 복구
+            release_compliance_ctrl()
+            set_ref_coord(DR_BASE)
+            wait(0.5)
+            
+try1 - [1번,3번,9번 타일 모서리를 찍어서 나온 결과]            
+📊 [알고리즘 분석결과] 평면 기울기 도출 완료
+[INFO] [1771991286.723702251] [dsr01.measure_tilt_node]:  -> X축 방향 기울어짐 (Roll)  : -0.402 도
+[INFO] [1771991286.724055318] [dsr01.measure_tilt_node]:  -> Y축 방향 기울어짐 (Pitch) : 0.105 도
+
+try2 - [1번,3번,9번 타일 모서리를 찍어서 나온 결과]            
+ 📊 [알고리즘 분석결과] 평면 기울기 도출 완료
+[INFO] [1771991553.742818271] [dsr01.measure_tilt_node]:  -> X축 방향 기울어짐 (Roll)  : -0.352 도
+[INFO] [1771991553.743167367] [dsr01.measure_tilt_node]:  -> Y축 방향 기울어짐 (Pitch) : -0.104 도
+
+try3 - [INFO] [1772003942.411782591] [dsr01.measure_tilt_node]: 📊 [알고리즘 분석결과] 평면 기울기 도출 완료
+[INFO] [1772003942.412324611] [dsr01.measure_tilt_node]:  -> X축 방향 기울어짐 (Roll)  : -0.390 도
+[INFO] [1772003942.412861138] [dsr01.measure_tilt_node]:  -> Y축 방향 기울어짐 (Pitch) : -0.036 도
+[INFO] [1772003942.413387217] [dsr01.measure_tilt_node]: ==================================================
+
+ ==================================================
+try4 -[INFO] [1772004039.114103357] [dsr01.measure_tilt_node]: 📊 [알고리즘 분석결과] 평면 기울기 도출 완료
+[INFO] [1772004039.114470578] [dsr01.measure_tilt_node]:  -> X축 방향 기울어짐 (Roll)  : -0.526 도
+[INFO] [1772004039.114849792] [dsr01.measure_tilt_node]:  -> Y축 방향 기울어짐 (Pitch) : 0.031 도
+[INFO] [1772004039.115209276] [dsr01.measure_tilt_node]: ==================================================
+[INFO] [1772004039.115575495] [dsr01.measure_tilt_node]: 테스트 완료. JReady로 복귀합니다.
+
+try5 -[INFO] [1772004133.516439492] [dsr01.measure_tilt_node]: 📊 [알고리즘 분석결과] 평면 기울기 도출 완료
+[INFO] [1772004133.516809953] [dsr01.measure_tilt_node]:  -> X축 방향 기울어짐 (Roll)  : -0.356 도
+[INFO] [1772004133.517152092] [dsr01.measure_tilt_node]:  -> Y축 방향 기울어짐 (Pitch) : -0.041 도
+[INFO] [1772004133.517492420] [dsr01.measure_tilt_node]: ==================================================
+[INFO] [1772004133.517835267] [dsr01.measure_tilt_node]: 테스트 완료. JReady로 복귀합니다.
+
+기울어진 채로 압착을 진행한다. 
+압착은 좌우로 비비면서 압을 가해 골고루 평탄화가 가능하도록 설정한다. 
+
+[INFO] [1772010915.183194388] [dsr01.measure_tilt_node]: ==================================================
+[INFO] [1772010915.183594900] [dsr01.measure_tilt_node]: 📊 [나선형 압착 최종 데이터 분석]
+[INFO] [1772010915.183983490] [dsr01.measure_tilt_node]:  -> 접촉 시 높이: 156.38 mm
+[INFO] [1772010915.184338779] [dsr01.measure_tilt_node]:  -> 최종 안착 높이: 138.98 mm
+[INFO] [1772010915.184704279] [dsr01.measure_tilt_node]:  -> 최종 안착 각도: Rx=107.55, Ry=178.42
+[INFO] [1772010915.185057414] [dsr01.measure_tilt_node]:  -> 💡 총 압착 깊이: 17.40 mm
+
+왜 썻는지 기록 
+크리티컬 포인트 명시
+비포 에프터
+
+모셔닝 -> 힘제어 ,순응 -> 이걸왜 써서 잡냐 
+알고리즘 -> 기울어진 운동장 -> 기운채로 작업 진행 
+품질 균등화 
+
+일단 타일마다 점 3개 찍어서 얼마나 기울어져있는지 확인 -> 기울어져있으면 압착판 파지후 압착 진행 
+왜 통합안되냐?
+1. 일단 진짜 우리가 일부러 각도준건 억지로 기울인 거라서 실제 타일 놓을때 이정도면 못놓는게 맡다. 
+2. 흡착툴의 내구성으로 인해 시멘트 각도가 틀어져 있으면 릴리즈에 문제가 생겨 즉시 통합이 안됬었다. 
+3. 
+
+기능 넣을꺼 
+타일을 다 배치하고 나서 그리퍼로 찍어서 평탄화 되어있고 안되어있는 타일 확인해서 
+해당 타일들을 해당 오차만큼 정밀하게 눌러서 평탄화 진행 
+타일은 벽면에서 20~30mm 떨어져서 시공하는게 좋음
+
+시작전에 글로벌 기울기 측정하고
+타일마다 국소 기울기를 점 3개 찍어서 기울어져있다 안기울어져 있다 타일마다 판단 
+
+ros2 run pick_and_place_text realsense # 내가 만든 뎁스 카메라 시각화 
+ros2 launch realsense2_camera rs_launch.py align_depth.enable:=true # 뎁스 카메라 토픽 날리는 노드
+ros2 service call /get_3d_position od_msg/srv/SrvDepthPosition "{target: 'tile'}"
+
+[패키지 버전 관리]
+Successfully installed numpy-1.26.4
+Collecting opencv-python==4.8.1.78
+(ros2의 cv_bridge는 무조건 numpy1.x버전을 쓸려하고, yolo의 opencv-python 4.13은 numpy 2.x 이상이 아니면 안돌아감 )
+그래서 opencv-python을 4.8.1.78로 낮춤.
+
+[내 stash다 날리고 pull하기]
+checkout으로 해당 branch로 변경하고 실행해야 그 브랜치에 hard reset함 
+git stash clear && git reset --hard HEAD && git clean -fd && git fetch origin && git reset --hard origin/$(git branch --show-current)
+
+
+[ir 카메라 테스트] 
+alias r='ros2 launch realsense2_camera rs_align_depth_launch.py depth_module.depth_profile:=848x480x30 rgb_camera.color_profile:=1280x720x30 initial_reset:=true align_depth.enable:=true enable_rgbd:=true enable_infra:=true enable_infra1:=true enable_infra2:=true depth_module.emitter_enabled:=0 pointcloud.enable:=true'
+
+ros2 param set /camera/camera depth_module.emitter_enabled 0 # 점 찍는게 씹히면 다른 터미널에서 쳐서 제거
+
+ros2 topic info /camera/camera/infra2/image_rect_raw
+Type: sensor_msgs/msg/Image
+
+header:
+  stamp:
+    sec: 1772768556
+    nanosec: 546102295
+  frame_id: camera_infra2_optical_frame
+height: 480
+width: 640
+encoding: mono8
+is_bigendian: 0
+step: 640
+data:
+
+[카메라 번호 못찾을때 솔루션]
+ls -l /dev/video*
+디버깅 코드를 만들어서 돌리기
+
+[anomalib설치 관련 버전 문제]
+pip install anomalib numpy==1.26.4 opencv-python==4.8.1.78 opencv-python-headless==4.8.1.78
+-> 기존 넘파이 오픈cv의 버전을 유지한채로 설치하게 고정
+pip uninstall opencv-python-headless -y
+pip install opencv-python==4.8.1.7[이거 데이터 셋 수집 코드 할때 headless하면 이거 gui못띄워서 에러남]
+그래서 headless는 지우고 동작시 됨(아직 anomalib동작할때 에러 없는지는 모름 )
 

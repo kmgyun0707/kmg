@@ -1,0 +1,40 @@
+[0.820s] Invoking command in '/home/rokey/kmg/ros2_ws/build/ros2_test': PYTHONPATH=/home/rokey/kmg/ros2_ws/build/ros2_test/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/rokey/kmg/ros2_ws/build/ros2_test/build
+[1.150s] running develop
+[1.412s] Removing /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2-test.egg-link (link to .)
+[1.441s] Invoked command in '/home/rokey/kmg/ros2_ws/build/ros2_test' returned '0': PYTHONPATH=/home/rokey/kmg/ros2_ws/build/ros2_test/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/rokey/kmg/ros2_ws/build/ros2_test/build
+[1.443s] Invoking command in '/home/rokey/kmg/ros2_ws/src/ros2_test': PYTHONPATH=/home/rokey/kmg/ros2_ws/build/ros2_test/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/ros2_test build --build-base /home/rokey/kmg/ros2_ws/build/ros2_test/build install --record /home/rokey/kmg/ros2_ws/build/ros2_test/install.log --single-version-externally-managed install_data --force
+[1.747s] running egg_info
+[1.747s] writing ../../build/ros2_test/ros2_test.egg-info/PKG-INFO
+[1.748s] writing dependency_links to ../../build/ros2_test/ros2_test.egg-info/dependency_links.txt
+[1.748s] writing entry points to ../../build/ros2_test/ros2_test.egg-info/entry_points.txt
+[1.748s] writing requirements to ../../build/ros2_test/ros2_test.egg-info/requires.txt
+[1.749s] writing top-level names to ../../build/ros2_test/ros2_test.egg-info/top_level.txt
+[1.750s] reading manifest file '../../build/ros2_test/ros2_test.egg-info/SOURCES.txt'
+[1.755s] writing manifest file '../../build/ros2_test/ros2_test.egg-info/SOURCES.txt'
+[1.756s] running build
+[1.756s] running build_py
+[1.756s] creating /home/rokey/kmg/ros2_ws/build/ros2_test/build
+[1.756s] creating /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib
+[1.756s] creating /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+[1.756s] copying ros2_test/make_dataset.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+[1.756s] copying ros2_test/__init__.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+[1.756s] copying ros2_test/tile_rotation_node.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+[1.756s] running install
+[1.757s] running install_lib
+[1.758s] creating /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+[1.758s] copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/make_dataset.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+[1.758s] copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/__init__.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+[1.758s] copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/tile_rotation_node.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+[1.758s] byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/make_dataset.py to make_dataset.cpython-310.pyc
+[1.759s] byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/__init__.py to __init__.cpython-310.pyc
+[1.760s] byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/tile_rotation_node.py to tile_rotation_node.cpython-310.pyc
+[1.760s] running install_data
+[1.761s] copying resource/ros2_test -> /home/rokey/kmg/ros2_ws/install/ros2_test/share/ament_index/resource_index/packages
+[1.761s] copying package.xml -> /home/rokey/kmg/ros2_ws/install/ros2_test/share/ros2_test
+[1.761s] running install_egg_info
+[1.763s] Copying ../../build/ros2_test/ros2_test.egg-info to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test-0.0.0-py3.10.egg-info
+[1.764s] running install_scripts
+[1.785s] Installing make_dataset script to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/ros2_test
+[1.785s] Installing tile_rotation_node script to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/ros2_test
+[1.786s] writing list of installed files to '/home/rokey/kmg/ros2_ws/build/ros2_test/install.log'
+[1.811s] Invoked command in '/home/rokey/kmg/ros2_ws/src/ros2_test' returned '0': PYTHONPATH=/home/rokey/kmg/ros2_ws/build/ros2_test/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/ros2_test build --build-base /home/rokey/kmg/ros2_ws/build/ros2_test/build install --record /home/rokey/kmg/ros2_ws/build/ros2_test/install.log --single-version-externally-managed install_data --force

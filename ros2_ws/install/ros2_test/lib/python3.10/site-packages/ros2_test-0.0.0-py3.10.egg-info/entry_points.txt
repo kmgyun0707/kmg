@@ -1,0 +1,5 @@
+[console_scripts]
+make_dataset = ros2_test.make_dataset:main
+tile_rotation_node = ros2_test.tile_rotation_node:main
+tile_rotation_node_ir = ros2_test.tile_rotation_node_ir:main
+

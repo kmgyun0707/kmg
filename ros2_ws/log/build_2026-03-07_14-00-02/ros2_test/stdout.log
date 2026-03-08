@@ -1,0 +1,36 @@
+running develop
+Removing /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2-test.egg-link (link to .)
+running egg_info
+writing ../../build/ros2_test/ros2_test.egg-info/PKG-INFO
+writing dependency_links to ../../build/ros2_test/ros2_test.egg-info/dependency_links.txt
+writing entry points to ../../build/ros2_test/ros2_test.egg-info/entry_points.txt
+writing requirements to ../../build/ros2_test/ros2_test.egg-info/requires.txt
+writing top-level names to ../../build/ros2_test/ros2_test.egg-info/top_level.txt
+reading manifest file '../../build/ros2_test/ros2_test.egg-info/SOURCES.txt'
+writing manifest file '../../build/ros2_test/ros2_test.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/rokey/kmg/ros2_ws/build/ros2_test/build
+creating /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib
+creating /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+copying ros2_test/make_dataset.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+copying ros2_test/__init__.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+copying ros2_test/tile_rotation_node.py -> /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test
+running install
+running install_lib
+creating /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/make_dataset.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/__init__.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+copying /home/rokey/kmg/ros2_ws/build/ros2_test/build/lib/ros2_test/tile_rotation_node.py -> /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test
+byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/make_dataset.py to make_dataset.cpython-310.pyc
+byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test/tile_rotation_node.py to tile_rotation_node.cpython-310.pyc
+running install_data
+copying resource/ros2_test -> /home/rokey/kmg/ros2_ws/install/ros2_test/share/ament_index/resource_index/packages
+copying package.xml -> /home/rokey/kmg/ros2_ws/install/ros2_test/share/ros2_test
+running install_egg_info
+Copying ../../build/ros2_test/ros2_test.egg-info to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/python3.10/site-packages/ros2_test-0.0.0-py3.10.egg-info
+running install_scripts
+Installing make_dataset script to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/ros2_test
+Installing tile_rotation_node script to /home/rokey/kmg/ros2_ws/install/ros2_test/lib/ros2_test
+writing list of installed files to '/home/rokey/kmg/ros2_ws/build/ros2_test/install.log'
